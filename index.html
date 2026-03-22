@@ -24,7 +24,7 @@
       --font-body: 'Inter', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; }
 
     body {
       background: var(--bg);
@@ -1031,16 +1031,43 @@
 
 <script>
 
-  // ── Hamburger menu ──
-  document.getElementById('hamburger').addEventListener('click', function() {
-    this.classList.toggle('open');
-    document.querySelector('.nav-links').classList.toggle('open');
-  });
+  // ── Page transitions ──
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:#0d0f12;opacity:0;pointer-events:none;transition:opacity 0.3s ease;z-index:9999;';
+    document.body.appendChild(overlay);
 
-  document.querySelectorAll('.nav-links a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      document.getElementById('hamburger').classList.remove('open');
-      document.querySelector('.nav-links').classList.remove('open');
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        e.preventDefault();
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        setTimeout(function() {
+          const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: offset, behavior: 'instant' });
+          setTimeout(function() {
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+          }, 50);
+        }, 300);
+      });
+    });
+  });
+// ── Hamburger menu ──
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('hamburger').addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        document.getElementById('hamburger').classList.remove('open');
+        document.querySelector('.nav-links').classList.remove('open');
+      });
     });
   });
 
