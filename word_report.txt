@@ -1,0 +1,29 @@
+WORD FREQUENCY REPORT
+========================================
+Files analysed: 1
+  - test.txt
+Total words: 30
+========================================
+
+RANK   WORD                 COUNT
+------------------------------------
+1      quick                2
+2      fox                  2
+3      lazy                 2
+4      dog                  2
+5      writing              2
+6      code                 2
+7      good                 2
+8      writes               2
+9      brown                1
+10     jumps                1
+11     over                 1
+12     words                1
+13     both                 1
+14     require              1
+15     clarity              1
+16     precision            1
+17     developer            1
+18     clean                1
+19     like                 1
+20     writer               1
