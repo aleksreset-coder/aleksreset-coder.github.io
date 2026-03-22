@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why You Need A Personal Project In Your Coding Journey — Aleksander</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0d0f12;
+      --bg2:          #13161b;
+      --bg3:          #1a1f26;
+      --border:       rgba(110,231,183,0.12);
+      --border-hover: rgba(110,231,183,0.35);
+      --accent:       #6ee7b7;
+      --text:         #e2e8f0;
+      --text-muted:   #7a8a9a;
+      --text-dim:     #3d4a58;
+      --font-mono:    'JetBrains Mono', monospace;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(110,231,183,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,231,183,0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(13,15,18,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--text-muted); }
+
+    .nav-back {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--accent); }
+
+    .article-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 140px 40px 100px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .article-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(110,231,183,0.1);
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+
+    .article-read {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .article-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+
+    .article-title {
+      font-family: var(--font-mono);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .article-intro {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-body h2 {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 48px 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .article-body h2::before {
+      content: '// ';
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .article-body p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .article-body p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .article-body em {
+      color: var(--text);
+      font-style: italic;
+    }
+
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      margin: 36px 0;
+      padding: 20px 28px;
+      background: rgba(110,231,183,0.04);
+    }
+
+    .pull-quote p {
+      font-family: var(--font-mono);
+      font-size: 15px !important;
+      color: var(--text) !important;
+      line-height: 1.7 !important;
+      margin: 0 !important;
+    }
+
+    /* Contrast card */
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+
+    .contrast-cell {
+      background: var(--bg2);
+      padding: 20px 22px;
+    }
+
+    .contrast-cell .contrast-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .contrast-cell.tutorial .contrast-label { color: var(--text-dim); }
+    .contrast-cell.personal .contrast-label { color: var(--accent); }
+
+    .contrast-cell ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .contrast-cell ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 5px 0;
+      border: none !important;
+      padding-left: 0 !important;
+    }
+
+    .contrast-cell ul li::before { content: none !important; }
+
+    .contrast-cell.tutorial ul li::before {
+      content: '✗ ' !important;
+      position: static !important;
+      color: var(--text-dim);
+    }
+
+    .contrast-cell.personal ul li::before {
+      content: '✓ ' !important;
+      position: static !important;
+      color: var(--accent);
+    }
+
+    .article-footer {
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .article-footer p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .comment-prompt {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+
+    .comment-prompt p { font-size: 15px; color: var(--text-muted); margin-bottom: 16px; }
+    .comment-prompt p:last-child { margin-bottom: 0; }
+    .comment-prompt strong { color: var(--accent); font-weight: 500; }
+
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 48px;
+      padding: 24px 28px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .author-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(110,231,183,0.1);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .author-info p:first-child {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .author-info p:last-child {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .post-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .post-nav-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .post-nav-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .post-nav-card span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .post-nav-card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; }
+    .post-nav-card.next { text-align: right; }
+
+    .back-to-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-top: 48px;
+      transition: color 0.2s;
+    }
+
+    .back-to-blog:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .article-wrap { padding: 100px 20px 60px; }
+      .post-nav { grid-template-columns: 1fr; }
+      .article-title { font-size: 26px; }
+      .contrast-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">aleksander<span>.dev</span></a>
+  <a href="index.html#blog" class="nav-back">← Back to blog</a>
+</nav>
+
+<article class="article-wrap">
+
+  <div class="article-meta">
+    <span class="article-tag">Best Practices</span>
+    <span class="article-read">3 min read</span>
+    <span class="article-date">March 2026</span>
+  </div>
+
+  <h1 class="article-title">Why You Need A Personal Project In Your Coding Journey</h1>
+
+  <p class="article-intro">
+    No course will teach you what a project you actually care about will. Here's why.
+  </p>
+
+  <div class="article-body">
+
+    <p>I'll never forget the moment I finally understood state management in React. Not from a tutorial. Not from a YouTube video at 1.5x speed. It clicked during a personal project I'd been quietly working on in my spare time — no deadline, no grade, no one watching.</p>
+
+    <p>Something about that specific combination — a problem I actually cared about, in a codebase entirely my own — created the conditions for real understanding. And it made me realise that personal projects aren't just a nice addition to a coding journey. For me, they've been the most important part of it.</p>
+
+    <h2>What a personal project actually is</h2>
+
+    <p>It's yours. That's the whole definition. No brief, no boss, no artificial constraints designed to keep the problem simple enough to teach. Just you, a problem you want to solve, and the freedom to figure it out however you choose.</p>
+
+    <p>That freedom is uncomfortable at first. Tutorials feel safer — someone has already solved the hard problems and is guiding you through them. A personal project offers no such comfort. <strong>But that discomfort is exactly where the learning happens.</strong> The moment you can't look up the answer because nobody has written about your specific problem in your specific context — that's the moment you become a developer rather than a student.</p>
+
+    <h2>Why it beats courses and tutorials</h2>
+
+    <div class="contrast-grid">
+      <div class="contrast-cell tutorial">
+        <span class="contrast-label">Tutorials</span>
+        <ul>
+          <li>Simplified, clean examples</li>
+          <li>Problems already solved for you</li>
+          <li>Someone else's decisions</li>
+          <li>Finished when the video ends</li>
+        </ul>
+      </div>
+      <div class="contrast-cell personal">
+        <span class="contrast-label">Personal project</span>
+        <ul>
+          <li>Real, messy problems</li>
+          <li>You figure it out yourself</li>
+          <li>Every decision is yours</li>
+          <li>Never really finished — always growing</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Tutorials teach you what other people already know. A personal project forces you to find out what <em>you</em> know — and more importantly, how you think when nobody is showing you the way.</p>
+
+    <h2>It becomes your story</h2>
+
+    <p>When I look back on my development as a programmer, I don't remember the courses. I remember the projects. The one that broke in a way I couldn't explain for two weeks. The one where I refactored the whole thing halfway through because I finally understood a better approach. The one that actually shipped and that people used.</p>
+
+    <p>Those projects are a record of how I think. They show persistence and creativity and the specific flavour of problems I'm drawn to. <strong>A CV lists your skills. A personal project shows them.</strong> It's the difference between saying you can swim and someone watching you swim.</p>
+
+    <h2>The writing connection</h2>
+
+    <p>I'm a writer as well as a developer, and the longer I do both, the more I see them as the same discipline in different clothes. A good story and a good codebase share the same qualities: clarity, structure, economy of expression, and a clear sense of what they're trying to do.</p>
+
+    <div class="pull-quote">
+      <p>"When you build a personal project, you're not just solving a problem. You're telling a story through code — one that reflects how you see the world and how you approach hard things."</p>
+    </div>
+
+    <p>That's why personal projects matter beyond the technical skills they build. They give you something to say. And in a field where everyone has roughly similar qualifications, having something genuine to say is the thing that actually sets you apart.</p>
+
+    <h2>Starting is the only hard part</h2>
+
+    <p>The most common reason people don't have a personal project is that they're waiting until they're good enough to build the thing they actually want to build. This is a trap. You get good enough by building things, not by waiting.</p>
+
+    <p>Start smaller than you think you need to. Build something embarrassingly simple. The version 1 of anything just needs to exist — it doesn't need to be impressive. You can make it impressive in version 2, once you understand the problem well enough to solve it properly.</p>
+
+    <p>The project that teaches you the most will be the one you start today, not the one you plan perfectly and never begin.</p>
+
+  </div>
+
+  <div class="article-footer">
+
+    <div class="comment-prompt">
+      <p><strong>Do you have a project idea brewing?</strong></p>
+      <p>What problem do you want to tackle? What would you build if there were no deadlines, no grades and no one watching? Tell me in the comments — sometimes saying it out loud is all it takes to actually start.</p>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar">👨‍💻</div>
+      <div class="author-info">
+        <p>Aleksander</p>
+        <p>Developer & writer — building things that work and writing words that land.</p>
+      </div>
+    </div>
+
+    <div class="post-nav">
+      <a href="post-2.html" class="post-nav-card">
+        <span>← Previous post</span>
+        <p>What I Wish I Knew Before My First Programming Project</p>
+      </a>
+      <div></div>
+    </div>
+
+    <a href="index.html#blog" class="back-to-blog">← Back to all posts</a>
+
+  </div>
+
+</article>
+
+</body>
+</html>
