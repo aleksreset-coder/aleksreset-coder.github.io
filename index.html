@@ -550,6 +550,21 @@
       display: none;
     }
 
+    /* ── Scroll animations ── */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+    .animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+    .animate-on-scroll:nth-child(4) { transition-delay: 0.3s; }
     /* ── Hamburger ── */
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--text-muted); transition: all 0.3s ease; }
@@ -720,29 +735,29 @@
 <section id="services">
   <div class="container">
     <p class="section-label">// what I do</p>
-    <h2 class="section-title">Services</h2>
+    <h2 class="section-title animate-on-scroll">Services</h2>
     <p class="section-sub">Two disciplines. One person. No handoff problems.</p>
 
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <div class="service-number">01</div>
         <span class="service-icon">🖥</span>
         <h3>Web Development</h3>
         <p>Clean, fast websites and web apps built to last. Performance and readability are not optional extras.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <div class="service-number">02</div>
         <span class="service-icon">⚙️</span>
         <h3>Codecrafting</h3>
         <p>Custom software solutions engineered around your problem, not the other way around.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <div class="service-number">03</div>
         <span class="service-icon">✍️</span>
         <h3>Technical Writing</h3>
         <p>Documentation and guides your users actually want to read. Clear, structured, and human.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <div class="service-number">04</div>
         <span class="service-icon">📖</span>
         <h3>Storyweaving</h3>
@@ -781,7 +796,7 @@
 
       <div class="about-content">
         <p class="section-label">// about me</p>
-        <h2 class="section-title">The person<br>behind the code</h2>
+        <h2 class="section-title animate-on-scroll">The person<br>behind the code</h2>
         <p>
           Some people write code. Some people write stories.
           <strong>I do both</strong> — and I've found that the best software
@@ -819,7 +834,7 @@
 <section id="contact">
   <div class="container">
     <p class="section-label">// get in touch</p>
-    <h2 class="section-title">Let's work together</h2>
+    <h2 class="section-title animate-on-scroll">Let's work together</h2>
     <p class="contact-sub">Have a project in mind? Tell me about it. I'll get back to you within 24 hours.</p>
 
     <form class="contact-form" id="contact-form" novalidate>
@@ -860,12 +875,12 @@
 <section id="blog">
   <div class="container">
     <p class="section-label">// latest writing</p>
-    <h2 class="section-title">From the blog</h2>
+    <h2 class="section-title animate-on-scroll">From the blog</h2>
     <p class="section-sub">Honest writing about code, creativity and the space between them.</p>
 
     <div class="blog-grid">
 
-      <article class="blog-card">
+      <article class="blog-card animate-on-scroll">
         <div class="blog-card-top">
           <span class="blog-tag">Mental Health</span>
           <span class="blog-read">4 min read</span>
@@ -875,7 +890,7 @@
         <a href="post-1.html" class="blog-card-link">Read article <span>→</span></a>
       </article>
 
-      <article class="blog-card">
+      <article class="blog-card animate-on-scroll">
         <div class="blog-card-top">
           <span class="blog-tag">Career Advice</span>
           <span class="blog-read">5 min read</span>
@@ -885,7 +900,7 @@
         <a href="post-2.html" class="blog-card-link">Read article <span>→</span></a>
       </article>
 
-      <article class="blog-card">
+      <article class="blog-card animate-on-scroll">
         <div class="blog-card-top">
           <span class="blog-tag">Best Practices</span>
           <span class="blog-read">3 min read</span>
@@ -907,6 +922,18 @@
 
 <script>
 
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => {
+    observer.observe(el);
+  });
   // ── Hamburger menu ──
   document.getElementById('hamburger').addEventListener('click', function() {
     this.classList.toggle('open');
